@@ -23,6 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= $form->field($model, 'username')->textInput() ?>
 
     <?= $form->field($model, 'password')->passwordInput() ?>
+    <?= $form->field($model, 'confirmPassword')->passwordInput() ?>
 
 
     <div class="form-group">

@@ -25,6 +25,10 @@ $this->title = 'Article Management';
                         <p class="mb-0"><?=$article->user[0]->fullname?></p>
                         <p style="font-size:12px;">Author</p>
                     </div>
+                    <div class="mt-3">
+                        <p class="mb-0"><?= date('F d Y', strtotime($article->created_at)) ?></p>
+                        <p style="font-size:12px;">Date published</p>
+                    </div>
                 </div>
             <?php endforeach; ?>
         </div>

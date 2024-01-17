@@ -42,7 +42,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             ['label' => 'Articles', 'url' => ['/site/index']],
             ['label' => 'My Articles', 'url' => ['/myarticle/index'],'visible' => !Yii::$app->user->isGuest],
             ['label' => 'Add Article', 'url' => ['/article/articleform'], 'visible' => !Yii::$app->user->isGuest],
-            ['label' => 'Sign-up', 'url' => ['/site/register']],
+            ['label' => 'Sign-up', 'url' => ['/site/register'], 'visible' => Yii::$app->user->isGuest],
             Yii::$app->user->isGuest
                 ? ['label' => 'Login', 'url' => ['/site/login']]
                 : '<li class="nav-item">'

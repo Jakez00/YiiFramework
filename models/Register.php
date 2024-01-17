@@ -9,12 +9,14 @@ class Register extends Model
 {
     public $username;
     public $password;
+    public $confirmPassword;
     public $fullname;
 
     public function rules()
     {
         return [
-            [['username', 'password', 'fullname'], 'required']
+            [['username', 'password', 'fullname','confirmPassword'], 'required'],
+            ['confirmPassword', 'compare', 'compareAttribute' => 'password', 'message' => 'Passwords do not match'],
         ];
     }
 
