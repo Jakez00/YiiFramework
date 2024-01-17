@@ -15,9 +15,9 @@ $this->title = 'Article Management';
 
     <div class="body-content">
 
-        <div class="row">
+        <div class="row justify-content-center">
             <?php foreach ($articles as $article): ?>
-                <div class="col-lg-4 mb-3 border border-1 p-3 mx-2">
+                <div class="col-lg-3 mb-3 border border-1 p-3 mx-2">
                     <h2><?= $article->title ?></h2>
                     <p><?= $article->content ?></p>
                     <div class="text-right">
