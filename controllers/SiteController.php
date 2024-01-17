@@ -9,6 +9,10 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\Article;
+use app\models\ArticleForm;
+use app\models\Register;
+use yii\data\Pagination;
 
 class SiteController extends Controller
 {
@@ -61,7 +65,22 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $query = Article::find();
+
+        $pagination = new Pagination([
+            'defaultPageSize' => 6,
+            'totalCount' => $query->count(),
+        ]);
+
+        $articles = $query->joinWith(['user'])
+            ->orderBy('title')
+            ->offset($pagination->offset)
+            ->limit($pagination->limit)
+            ->all();
+        return $this->render('articles', [
+            'articles' => $articles,
+            'pagination' => $pagination,
+        ]);
     }
 
     /**
@@ -103,26 +122,30 @@ class SiteController extends Controller
      *
      * @return Response|string
      */
-    public function actionContact()
+    public function actionArticleform()
     {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
+        $model = new ArticleForm();
+        // if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
+        //     Yii::$app->session->setFlash('contactFormSubmitted');
 
-            return $this->refresh();
+        //     return $this->refresh();
+        // }
+        return $this->render('articleForm', [
+            'model' => $model,
+        ]);
+    }
+    public function actionRegister()
+    {
+        $model = new Register();
+        if ($model->load(Yii::$app->request->post()) && $model->registered()) {
+            Yii::$app->session->setFlash('success', 'Registration successful! You can now log in.');
+            return $this->redirect(['login']);
         }
-        return $this->render('contact', [
+        return $this->render('register', [
             'model' => $model,
         ]);
     }
 
-    /**
-     * Displays about page.
-     *
-     * @return string
-     */
-    public function actionAbout()
-    {
-        return $this->render('about');
-    }
+    
+
 }
